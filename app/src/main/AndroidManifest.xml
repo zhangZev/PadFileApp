@@ -8,6 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
+        android:name=".APPAplication"
         android:theme="@style/Theme.PadFileApp">
         <activity android:name=".VipActivity"></activity>
         <activity

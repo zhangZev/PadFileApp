@@ -2,92 +2,112 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_bg"
     android:layout_width="match_parent"
+    android:padding="20dp"
     android:layout_height="match_parent"
-    android:gravity="bottom"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:src="@drawable/icon_home_title"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="50sp"></ImageView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingHorizontal="50dp"
+        android:paddingVertical="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+        <cn.jzvd.JzvdStd
+            android:id="@+id/view_video"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></cn.jzvd.JzvdStd>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_one"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:text="促进会概况" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/img_rechcler"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_two"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="商会会员" />
+        <include
+            layout="@layout/include_image_view"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="党支部建设" />
+    </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="维护更新" />
-            </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="end"
-                android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_one"
+            android:layout_width="180dp"
+            android:layout_height="55dp"
+            android:textColor="@color/white"
+            android:background="@drawable/icon_home_btn_bg"
+            android:text="促进会概况" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="前进" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_two"
+            android:layout_width="180dp"
+            android:layout_height="55dp"
+            android:textColor="@color/white"
+            android:background="@drawable/icon_home_btn_bg"
+            android:layout_marginStart="20dp"
+            android:text="商会会员" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="主页" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="180dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/icon_home_btn_bg"
+            android:text="党支部建设" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="后退" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="180dp"
+            android:layout_height="55dp"
+            android:textColor="@color/white"
+            android:background="@drawable/icon_home_btn_bg"
+            android:layout_marginStart="20dp"
+            android:text="维护更新" />
+    </LinearLayout>
 
-            </LinearLayout>
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="XX商（协）会"
-            android:textColor="#000000"
-            android:textSize="50sp"></TextView>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="65dp"
+            android:layout_height="45dp"
+            android:background="@drawable/icon_home_back" />
 
-    </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="65dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/icon_home_home" />
+
+    </LinearLayout>
 
 </LinearLayout>

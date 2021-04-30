@@ -3,9 +3,12 @@ package way.kichain.padfileapp.utils;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -36,6 +39,14 @@ public final class FileUtils {
     }
 
     private static final String LINE_SEP = System.getProperty("line.separator");
+
+    public static String getSDPath() {
+        boolean hasSDCard = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+        if (hasSDCard) {
+            return FILE_DIR;
+        } else
+            return "/data/AApadData";
+    }
 
     /**
      * 根据文件路径获取文件

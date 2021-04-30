@@ -33,7 +33,7 @@ public class VipActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         //获取首页内容
-        File file_home = new File(FileUtils.FILE_DIR + fileDirs[2]);
+        File file_home = new File(FileUtils.getSDPath()  + fileDirs[2]);
         List<File> vipFiles = FileUtils.listFilesInDir(file_home, false);
         List<VipModel> mData = new ArrayList<>();
         for (File file : vipFiles) {
