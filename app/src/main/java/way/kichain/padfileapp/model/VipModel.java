@@ -8,7 +8,16 @@ import java.io.File;
  */
 public class VipModel {
     private File imageFile;
+    private File descFile;
     private File ContentFile;
+
+    public File getDescFile() {
+        return descFile;
+    }
+
+    public void setDescFile(File descFile) {
+        this.descFile = descFile;
+    }
 
     public File getImageFile() {
         return imageFile;

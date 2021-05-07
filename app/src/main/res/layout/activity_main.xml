@@ -2,112 +2,117 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_bg"
     android:layout_width="match_parent"
-    android:padding="20dp"
     android:layout_height="match_parent"
+    android:padding="20dp"
     android:orientation="vertical"
+    android:id="@+id/ll_bg"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:gravity="center"
-        android:src="@drawable/icon_home_title"
-        android:text=""
-        android:textColor="#000000"
-        android:textSize="50sp"></ImageView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingHorizontal="50dp"
-        android:paddingVertical="20dp">
+       <ImageView
+           android:id="@+id/tv_title"
+           android:layout_width="match_parent"
+           android:layout_height="100dp"
+           android:gravity="center"
+           android:src="@drawable/icon_home_title"
+           android:text=""
+           android:textColor="#000000"
+           android:textSize="50sp"></ImageView>
 
-        <cn.jzvd.JzvdStd
-            android:id="@+id/view_video"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></cn.jzvd.JzvdStd>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dip"
+           android:layout_weight="1"
+           android:orientation="horizontal"
+           android:paddingHorizontal="50dp"
+           android:paddingVertical="20dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/img_rechcler"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_weight="1"
-            android:visibility="gone" />
+           <cn.jzvd.JzvdStd
+               android:id="@+id/view_video"
+               android:layout_width="0dip"
+               android:padding="1dp"
+               android:background="@drawable/app_video_solid"
+               android:layout_height="match_parent"
+               android:layout_weight="1"></cn.jzvd.JzvdStd>
 
-        <include
-            layout="@layout/include_image_view"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:layout_weight="1" />
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/img_rechcler"
+               android:layout_width="0dip"
+               android:layout_height="match_parent"
+               android:layout_marginStart="30dp"
+               android:layout_weight="1"
+               android:visibility="gone" />
 
-    </LinearLayout>
+           <include
+               layout="@layout/include_image_view"
+               android:layout_width="0dip"
+               android:layout_height="match_parent"
+               android:layout_marginStart="30dp"
+               android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+       </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_one"
-            android:layout_width="180dp"
-            android:layout_height="55dp"
-            android:textColor="@color/white"
-            android:background="@drawable/icon_home_btn_bg"
-            android:text="促进会概况" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_two"
-            android:layout_width="180dp"
-            android:layout_height="55dp"
-            android:textColor="@color/white"
-            android:background="@drawable/icon_home_btn_bg"
-            android:layout_marginStart="20dp"
-            android:text="商会会员" />
+           <androidx.appcompat.widget.AppCompatButton
+               android:id="@+id/btn_one"
+               android:layout_width="180dp"
+               android:layout_height="55dp"
+               android:textColor="@color/white"
+               android:background="@drawable/icon_home_btn_bg"
+               android:text="促进会概况" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="180dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/white"
-            android:background="@drawable/icon_home_btn_bg"
-            android:text="党支部建设" />
+           <androidx.appcompat.widget.AppCompatButton
+               android:id="@+id/btn_two"
+               android:layout_width="180dp"
+               android:layout_height="55dp"
+               android:textColor="@color/white"
+               android:background="@drawable/icon_home_btn_bg"
+               android:layout_marginStart="40dp"
+               android:text="商会会员" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="180dp"
-            android:layout_height="55dp"
-            android:textColor="@color/white"
-            android:background="@drawable/icon_home_btn_bg"
-            android:layout_marginStart="20dp"
-            android:text="维护更新" />
-    </LinearLayout>
+           <androidx.appcompat.widget.AppCompatButton
+               android:layout_width="180dp"
+               android:layout_height="55dp"
+               android:layout_marginStart="40dp"
+               android:textColor="@color/white"
+               android:background="@drawable/icon_home_btn_bg"
+               android:text="党支部建设" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="end"
-        android:orientation="horizontal">
+           <androidx.appcompat.widget.AppCompatButton
+               android:layout_width="180dp"
+               android:layout_height="55dp"
+               android:visibility="gone"
+               android:textColor="@color/white"
+               android:background="@drawable/icon_home_btn_bg"
+               android:layout_marginStart="20dp"
+               android:text="维护更新" />
+       </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="65dp"
-            android:layout_height="45dp"
-            android:background="@drawable/icon_home_back" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="20dp"
+           android:gravity="end"
+           android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="65dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/icon_home_home" />
+           <androidx.appcompat.widget.AppCompatButton
+               android:layout_width="65dp"
+               android:layout_height="45dp"
+               android:background="@drawable/icon_home_back" />
 
-    </LinearLayout>
+           <androidx.appcompat.widget.AppCompatButton
+               android:layout_width="65dp"
+               android:layout_height="45dp"
+               android:layout_marginStart="20dp"
+               android:background="@drawable/icon_home_home" />
+
+       </LinearLayout>
+
 
 </LinearLayout>

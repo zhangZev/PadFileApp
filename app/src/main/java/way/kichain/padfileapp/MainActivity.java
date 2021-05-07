@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
+import com.gyf.immersionbar.ImmersionBar;
 import com.zyq.easypermission.EasyPermission;
 import com.zyq.easypermission.EasyPermissionHelper;
 
@@ -34,9 +38,10 @@ import way.kichain.padfileapp.adapter.HomeImageAdapter;
 import way.kichain.padfileapp.model.HomeModel;
 import way.kichain.padfileapp.utils.FileUtils;
 import way.kichain.padfileapp.utils.RecyclerItemDecoration;
+import way.kichain.padfileapp.views.LoadingDialog;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     /**
      * 需要申请的权限数组
      */
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             , R.id.img_fore, R.id.img_five, R.id.img_six})
     List<ImageView> mImageviews;
     private List<File> mImages;
+    private HomeModel homeModel;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,26 +69,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        loadingDialog = new LoadingDialog(this);
+
         ll_bg = findViewById(R.id.ll_bg);
         videoView = findViewById(R.id.view_video);
         mRecyclerView = findViewById(R.id.img_rechcler);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new RecyclerItemDecoration(20, 10, 3));
-
+        homeModel = new HomeModel();
         checkPermissions();
     }
 
     private void checkPermissions() {
         if (EasyPermission.build().hasPermission(this, needPermissions)) {
-            gotoCreateFile();
+            //gotoCreateFile();
+            handler.sendEmptyMessage(0);
         } else {
             EasyPermission.build().requestPermission(MainActivity.this, needPermissions);
         }
 
     }
 
-    private void gotoCreateFile() {
+    /**
+     * 初始化文件夹
+     */
+    private void initFile() {
         File file = new File(FileUtils.getSDPath());
         if (!file.exists()) {// 判断当前目录是否存在，存在返回true,否则返回false
             file.mkdir();
@@ -97,10 +110,14 @@ public class MainActivity extends AppCompatActivity {
         if (!file_child.exists()) {
             file_child.mkdir();
         }
+        gotoFile();
+    }
+
+    private void gotoFile() {
         //获取首页内容
         File file_home = new File(FileUtils.getSDPath() + fileDirs[0]);
         List<File> mHomeFils = FileUtils.listFilesInDir(file_home, false);
-        HomeModel model = new HomeModel();
+
         if (mHomeFils != null) {
             for (File f : mHomeFils) {
                 String name = f.getName().toLowerCase();
@@ -110,14 +127,13 @@ public class MainActivity extends AppCompatActivity {
                     model.setImages(mImages);
                     HomeImageAdapter homeImageAdapter = new HomeImageAdapter(this, mImages);
                     mRecyclerView.setAdapter(homeImageAdapter);
-                } else */if (name.endsWith(".mp4") || name.endsWith(".MP4")) {
-                    model.setVideos(f);
-                    videoView.setUp(f.getPath(), "title");
-                    videoView.posterImageView.setImageBitmap(getImageFromVideo(f.getPath()));
+                } else */
+                if (name.endsWith(".mp4") || name.endsWith(".MP4")) {
+                    homeModel.setVideos(f);
                 } else if (name.endsWith(".jpg") || name.endsWith(".jpeg")
                         || name.endsWith(".png")) {
-                    model.setBgFile(f);
-                    ll_bg.setBackground(new BitmapDrawable(FileUtils.getLoacalBitmap(f.getPath())));
+                    homeModel.setBgFile(f);
+                    homeImage = homeModel.bgFile.getPath();
                 }
             }
         }
@@ -132,30 +148,31 @@ public class MainActivity extends AppCompatActivity {
         List<File> mImages = new ArrayList<>();
         File fileVip = new File(FileUtils.getSDPath() + fileDirs[2]);
         List<File> mVipFils = FileUtils.listFilesInDir(fileVip, false);
-        if(mVipFils!=null){
+        if (mVipFils != null) {
             //遍历获取会员中文件夹
-            for (File file:mVipFils) {
+            for (File file : mVipFils) {
                 List<File> mDataFiles = FileUtils.listFilesInDir(file, false);
-                for (File image:mDataFiles) {
+                for (File image : mDataFiles) {
                     String name = image.getName().toLowerCase();
                     if (name.endsWith(".jpg") || name.endsWith(".jpeg")
-                            || name.endsWith(".png")){
+                            || name.endsWith(".png")) {
                         mImages.add(image);
                     }
                 }
             }
-            showImages(mImages);
+            homeModel.setImages(mImages);
         }
+        handler.sendEmptyMessage(1);
     }
 
     private void showImages(List<File> mImages) {
-        for (int i=0;i<mImages.size();i++){
-            if(i>=6){
+        for (int i = 0; i < mImages.size(); i++) {
+            if (i >= 6) {
                 return;
             }
-            mImageviews.get(i).setImageBitmap(FileUtils.getLoacalBitmap(mImages.get(i).getPath()));
+            //mImageviews.get(i).setImageBitmap(FileUtils.getLoacalBitmap(mImages.get(i).getPath()));
+            Glide.with(this).load(mImages.get(i)).into( mImageviews.get(i));
         }
-
     }
 
     //从视频中截取图片
@@ -184,5 +201,43 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //使用EasyPermissionHelper注入回调
         EasyPermissionHelper.getInstance().onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        checkPermissions();
     }
+
+    //消息处理者,创建一个Handler的子类对象,目的是重写Handler的处理消息的方法(handleMessage())
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    loadingDialog.show();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initFile();
+                        }
+                    }).start();
+                    break;
+                case 1:
+                    showFiles();
+                    loadingDialog.dismiss();
+                    break;
+            }
+        }
+    };
+
+    private void showFiles() {
+        if(homeModel.getVideos()!=null){
+            videoView.setUp(homeModel.getVideos().getPath(), "title");
+            videoView.posterImageView.setImageBitmap(getImageFromVideo(homeModel.getVideos().getPath()));
+        }
+        if (homeModel.getBgFile()!=null){
+            ll_bg.setBackground(new BitmapDrawable(FileUtils.getLoacalBitmap(homeModel.getBgFile().getPath())));
+        }
+        if(homeModel.getImages()!=null){
+            showImages(homeModel.getImages());
+        }
+    }
+
+
 }

@@ -2,16 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="way.kichain.padfileapp">
 
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <meta-data
+        android:name="android.max_aspect"
+        android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
+    <meta-data
+        android:name="android.notch_support"
+        android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
+    <meta-data
+        android:name="notch.config"
+        android:value="portrait|landscape" />
+
     <application
+        android:name=".APPAplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:maxAspectRatio="2.4"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
-        android:name=".APPAplication"
         android:theme="@style/Theme.PadFileApp">
-        <activity android:name=".VipActivity"></activity>
+        <activity
+            android:name=".InfosActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity
+            android:name=".VipActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".AdvancementActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
@@ -25,13 +51,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
