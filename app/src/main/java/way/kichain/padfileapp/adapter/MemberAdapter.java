@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +22,15 @@ import way.kichain.padfileapp.utils.FileUtils;
  * @time:{2021/4/28}
  * @auhor:{ZhangXW}
  */
-public class VipAdapter extends RecyclerView.Adapter<VipAdapter.VH> {
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.VH> {
     private Context mContext;
     private List<VipModel> mFils = new ArrayList<>();
     private final Typeface mtypeface;
 
-    public VipAdapter(Context context, List files) {
+    public MemberAdapter(Context context, List files) {
         mContext = context;
         mFils = files;
-        mtypeface = Typeface.createFromAsset(mContext.getAssets(),"myfont.ttf");
+        mtypeface = Typeface.createFromAsset(mContext.getAssets(), "myfont.ttf");
     }
 
 
@@ -39,7 +38,7 @@ public class VipAdapter extends RecyclerView.Adapter<VipAdapter.VH> {
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_vip_list_view, null);
+                .inflate(R.layout.item_member_one_view, null);
 
         return new VH(view);
     }
@@ -49,9 +48,13 @@ public class VipAdapter extends RecyclerView.Adapter<VipAdapter.VH> {
         VipModel file = mFils.get(position);
         holder.tvTitle.setTypeface(mtypeface);
         holder.tv_content.setTypeface(mtypeface);
-        holder.imgUser.setImageBitmap(FileUtils.getLoacalBitmap(file.getImageFile().getPath()));
-        holder.tvTitle.setText(FileUtils.getFileNameNoExtension(file.getImageFile()));
-        holder.tv_content.setText(FileUtils.ReadTxtFile(file.getDescFile()));
+        if (file.getImageFile() != null) {
+            holder.imgUser.setImageBitmap(FileUtils.getLoacalBitmap(file.getImageFile().getPath()));
+            holder.tvTitle.setText(FileUtils.getFileNameNoExtension(file.getImageFile()));
+        }
+        if (file.getDescFile() != null) {
+            holder.tv_content.setText(FileUtils.ReadTxtFile(file.getDescFile()));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +88,7 @@ public class VipAdapter extends RecyclerView.Adapter<VipAdapter.VH> {
 
     public onItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(VipAdapter.onItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(MemberAdapter.onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 

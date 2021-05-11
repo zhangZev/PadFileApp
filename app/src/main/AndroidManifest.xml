@@ -31,9 +31,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PadFileApp">
+        <activity android:name=".CujinActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" ></activity>
+        <activity
+            android:name=".MemberActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".InfosActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".BaseActivity" />
         <activity
             android:name=".VipActivity"

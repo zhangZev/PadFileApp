@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +22,11 @@ import way.kichain.padfileapp.utils.FileUtils;
  * @time:{2021/4/28}
  * @auhor:{ZhangXW}
  */
-public class VipAdapter extends RecyclerView.Adapter<VipAdapter.VH> {
+public class CuJInAdapter extends RecyclerView.Adapter<CuJInAdapter.VH> {
     private Context mContext;
     private List<VipModel> mFils = new ArrayList<>();
     private final Typeface mtypeface;
-
-    public VipAdapter(Context context, List files) {
+    public CuJInAdapter(Context context, List files) {
         mContext = context;
         mFils = files;
         mtypeface = Typeface.createFromAsset(mContext.getAssets(),"myfont.ttf");
@@ -85,7 +83,7 @@ public class VipAdapter extends RecyclerView.Adapter<VipAdapter.VH> {
 
     public onItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(VipAdapter.onItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(CuJInAdapter.onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 

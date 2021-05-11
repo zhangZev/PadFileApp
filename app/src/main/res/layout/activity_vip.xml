@@ -5,20 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ll_bg"
+    android:background="@mipmap/icon_huiyuan_bg"
+    android:padding="10dp"
     android:orientation="vertical"
     tools:context=".AdvancementActivity">
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="VIP"
-        android:textSize="20sp"></TextView>
+        android:padding="15dp"
+        android:src="@mipmap/iocn_huiyuan_title"
+        ></ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="90dp"
+        />
 
+    <include layout="@layout/include_base_title"/>
 
 </LinearLayout>

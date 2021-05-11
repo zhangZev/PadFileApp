@@ -19,6 +19,7 @@ import org.apache.poi.xwpf.converter.core.FileURIResolver;
 import org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;
 import org.apache.poi.xwpf.converter.xhtml.XHTMLOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
 
 import java.io.BufferedWriter;
@@ -64,6 +65,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+
 
 /**
  * 2016/9/12 0012，由 yuezc 创建 .
@@ -121,22 +123,24 @@ public class DocumentFormatConvertUtils {
                                       PictureType pictureType, String suggestedName,
                                       float widthInches, float heightInches) {
                 //String name = docName.substring(0, docName.indexOf("."));
-                return  suggestedName;
+                return suggestedName;
             }
         });
 
         //保存图片
-        List<Picture> pics = wordDocument.getPicturesTable().getAllPictures();
-        if (pics != null) {
-            for (int i = 0; i < pics.size(); i++) {
-                Picture pic = (Picture) pics.get(i);
-                System.out.println(pic.suggestFullFileName());
-                try {
-                    String name = docName.substring(0, docName.indexOf("."));
-                    pic.writeImageContent(new FileOutputStream(htmlPath +"/"
-                            + pic.suggestFullFileName()));
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (wordDocument.getPicturesTable() != null) {
+            List<Picture> pics = wordDocument.getPicturesTable().getAllPictures();
+            if (pics != null) {
+                for (int i = 0; i < pics.size(); i++) {
+                    Picture pic = (Picture) pics.get(i);
+                    System.out.println(pic.suggestFullFileName());
+                    try {
+                        String name = docName.substring(0, docName.indexOf("."));
+                        pic.writeImageContent(new FileOutputStream(htmlPath + "/"
+                                + pic.suggestFullFileName()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -168,7 +172,24 @@ public class DocumentFormatConvertUtils {
             e.printStackTrace();
         }
         //保存html文件
-        writeFile(new String(out.toByteArray()), htmlPath + htmlName);
+        String content = addHead(out);
+        writeFile(content, htmlPath + htmlName);
+    }
+
+    @NotNull
+    public static String addHead(ByteArrayOutputStream out) {
+        String content = new String(out.toByteArray());
+        content = content.replaceAll("font-family(:*)", "");
+        String head = "<style type=\"text/css\">@font-face{font-family: myFirstFont;src: url('file:///android_asset/myfont.ttf');}body{font-family:myFirstFont;}</style>";
+        content = head + content;
+        return content;
+    }
+
+    public static String addHead(String content) {
+        content = content.replaceAll("font-family(:*)", "");
+        String head = "<style type=\"text/css\">@font-face{font-family: myFirstFont;src: url('file:///android_asset/myfont.ttf');}body{font-family:myFirstFont;}</style>";
+        content = head + content;
+        return content;
     }
 
     /**
@@ -202,6 +223,12 @@ public class DocumentFormatConvertUtils {
                     // 3) 将 XWPFDocument转换成XHTML
                     OutputStream out = new FileOutputStream(new File(htmlPath + htmlName));
                     XHTMLConverter.getInstance().convert(document, out, options);
+                    File htmlFile = new File(htmlPath + htmlName);
+                    if (htmlFile.exists()) {
+                        String content = FileUtils.ReadTxtFile(htmlFile);
+                        content = addHead(content);
+                        writeFile(content,htmlFile.getPath());
+                    }
                 } else {
                     System.out.println("Enter only MS Office 2007+ files");
                 }
@@ -693,44 +720,41 @@ public class DocumentFormatConvertUtils {
 
     /**
      * word文档转成html格式
-     * */
-    public static void convert2Html(String fileName, String docName)
-             {
-                 HWPFDocument wordDocument = null;
-                 try {
-                     wordDocument = new HWPFDocument(new FileInputStream(fileName));
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-                 WordToHtmlConverter wordToHtmlConverter = null;
-                 try {
-                     wordToHtmlConverter = new WordToHtmlConverter(
+     */
+    public static void convert2Html(String fileName, String docName) {
+        HWPFDocument wordDocument = null;
+        try {
+            wordDocument = new HWPFDocument(new FileInputStream(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WordToHtmlConverter wordToHtmlConverter = null;
+        try {
+            wordToHtmlConverter = new WordToHtmlConverter(
                     DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());
-                 } catch (ParserConfigurationException e) {
-                     e.printStackTrace();
-                 }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
 
-                 //设置图片路径
-        wordToHtmlConverter.setPicturesManager(new PicturesManager()
-        {
-            public String savePicture( byte[] content,
-                                       PictureType pictureType, String suggestedName,
-                                       float widthInches, float heightInches )
-            {
-                String name = docName.substring(0,docName.indexOf("."));
-                return name+"/"+suggestedName;
+        //设置图片路径
+        wordToHtmlConverter.setPicturesManager(new PicturesManager() {
+            public String savePicture(byte[] content,
+                                      PictureType pictureType, String suggestedName,
+                                      float widthInches, float heightInches) {
+                String name = docName.substring(0, docName.indexOf("."));
+                return name + "/" + suggestedName;
             }
-        } );
+        });
 
         //保存图片
-        List<Picture> pics=wordDocument.getPicturesTable().getAllPictures();
-        if(pics!=null){
-            for(int i=0;i<pics.size();i++){
-                Picture pic = (Picture)pics.get(i);
-                System.out.println( pic.suggestFullFileName());
+        List<Picture> pics = wordDocument.getPicturesTable().getAllPictures();
+        if (pics != null) {
+            for (int i = 0; i < pics.size(); i++) {
+                Picture pic = (Picture) pics.get(i);
+                System.out.println(pic.suggestFullFileName());
                 try {
-                    String name = docName.substring(0,docName.indexOf("."));
-                    pic.writeImageContent(new FileOutputStream(htmlPath+"/"+ name + "/"
+                    String name = docName.substring(0, docName.indexOf("."));
+                    pic.writeImageContent(new FileOutputStream(htmlPath + "/" + name + "/"
                             + pic.suggestFullFileName()));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -746,33 +770,29 @@ public class DocumentFormatConvertUtils {
         StreamResult streamResult = new StreamResult(out);
 
         TransformerFactory tf = TransformerFactory.newInstance();
-                 Transformer serializer = null;
-                 try {
-                     serializer = tf.newTransformer();
-                 } catch (TransformerConfigurationException e) {
-                     e.printStackTrace();
-                 }
-                 serializer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+        Transformer serializer = null;
+        try {
+            serializer = tf.newTransformer();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        }
+        serializer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
         serializer.setOutputProperty(OutputKeys.INDENT, "yes");
         serializer.setOutputProperty(OutputKeys.METHOD, "html");
-                 try {
-                     serializer.transform(domSource, streamResult);
-                 } catch (TransformerException e) {
-                     e.printStackTrace();
-                 }
-                 try {
-                     out.close();
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-                 //保存html文件
+        try {
+            serializer.transform(domSource, streamResult);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+        try {
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //保存html文件
         //保存html文件
         writeFile(new String(out.toByteArray()), htmlPath + htmlName);
     }
-
-
-
-
 
 
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="10dp"
+    android:background="@mipmap/home_bg"
     android:orientation="vertical"
     android:id="@+id/ll_bg"
     tools:context=".MainActivity">
@@ -12,21 +13,20 @@
 
        <ImageView
            android:id="@+id/tv_title"
-           android:layout_width="match_parent"
-           android:layout_height="100dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
            android:gravity="center"
-           android:src="@drawable/icon_home_title"
-           android:text=""
-           android:textColor="#000000"
-           android:textSize="50sp"></ImageView>
+           android:layout_gravity="center"
+           android:src="@mipmap/icon_home_title"
+           ></ImageView>
 
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="0dip"
            android:layout_weight="1"
            android:orientation="horizontal"
-           android:paddingHorizontal="50dp"
-           android:paddingVertical="20dp">
+           android:paddingHorizontal="80dp"
+           android:paddingVertical="25dp">
 
            <cn.jzvd.JzvdStd
                android:id="@+id/view_video"
@@ -48,7 +48,7 @@
                layout="@layout/include_image_view"
                android:layout_width="0dip"
                android:layout_height="match_parent"
-               android:layout_marginStart="30dp"
+               android:layout_marginStart="60dp"
                android:layout_weight="1" />
 
        </LinearLayout>
@@ -57,62 +57,46 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:gravity="center"
+           android:layout_gravity="center"
            android:orientation="horizontal">
 
-           <androidx.appcompat.widget.AppCompatButton
+           <ImageView
                android:id="@+id/btn_one"
-               android:layout_width="180dp"
-               android:layout_height="55dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
                android:textColor="@color/white"
-               android:background="@drawable/icon_home_btn_bg"
-               android:text="促进会概况" />
+               android:src="@mipmap/icon_home_one"
+              />
 
-           <androidx.appcompat.widget.AppCompatButton
+           <ImageView
                android:id="@+id/btn_two"
-               android:layout_width="180dp"
-               android:layout_height="55dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
                android:textColor="@color/white"
-               android:background="@drawable/icon_home_btn_bg"
-               android:layout_marginStart="40dp"
-               android:text="商会会员" />
+               android:src="@mipmap/icon_home_three"
+               android:layout_marginStart="60dp"
+                />
 
-           <androidx.appcompat.widget.AppCompatButton
-               android:layout_width="180dp"
-               android:layout_height="55dp"
-               android:layout_marginStart="40dp"
+           <ImageView
+               android:id="@+id/btn_three"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="60dp"
                android:textColor="@color/white"
-               android:background="@drawable/icon_home_btn_bg"
-               android:text="党支部建设" />
+               android:src="@mipmap/icon_home_two"
+               />
 
-           <androidx.appcompat.widget.AppCompatButton
+           <ImageView
                android:layout_width="180dp"
                android:layout_height="55dp"
                android:visibility="gone"
                android:textColor="@color/white"
-               android:background="@drawable/icon_home_btn_bg"
+               android:src="@mipmap/icon_home_btn_bg"
                android:layout_marginStart="20dp"
                android:text="维护更新" />
        </LinearLayout>
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="20dp"
-           android:gravity="end"
-           android:orientation="horizontal">
-
-           <androidx.appcompat.widget.AppCompatButton
-               android:layout_width="65dp"
-               android:layout_height="45dp"
-               android:background="@drawable/icon_home_back" />
-
-           <androidx.appcompat.widget.AppCompatButton
-               android:layout_width="65dp"
-               android:layout_height="45dp"
-               android:layout_marginStart="20dp"
-               android:background="@drawable/icon_home_home" />
-
-       </LinearLayout>
+       <include layout="@layout/include_base_title"/>
 
 
 </LinearLayout>

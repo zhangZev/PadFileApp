@@ -13,7 +13,6 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 
-import com.aspose.words.Document;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
@@ -56,8 +55,8 @@ public class AdvancementActivity extends BaseActivity {
         webview.getSettings().setLoadWithOverviewMode(true);
         webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webview.getSettings().setTextZoom(100);
-        /*webview.setBackgroundColor(0); // 设置背景色
-        webview.getBackground().setAlpha(0);*/
+        webview.setBackgroundColor(0); // 设置背景色
+        webview.getBackground().setAlpha(0);
         /*if (!TextUtils.isEmpty(homeImage)){
             ll_bg.setBackground(new BitmapDrawable(FileUtils.getLoacalBitmap(homeImage)));
         }*/

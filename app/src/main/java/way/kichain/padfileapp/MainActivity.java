@@ -1,7 +1,6 @@
 package way.kichain.padfileapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,16 +12,12 @@ import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.gyf.immersionbar.ImmersionBar;
+import com.shehuan.niv.NiceImageView;
 import com.zyq.easypermission.EasyPermission;
 import com.zyq.easypermission.EasyPermissionHelper;
 
@@ -34,7 +29,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jzvd.JzvdStd;
-import way.kichain.padfileapp.adapter.HomeImageAdapter;
 import way.kichain.padfileapp.model.HomeModel;
 import way.kichain.padfileapp.utils.FileUtils;
 import way.kichain.padfileapp.utils.RecyclerItemDecoration;
@@ -52,13 +46,15 @@ public class MainActivity extends BaseActivity {
 
     public static String[] fileDirs = {"/首页", "/促进会概况", "/会员风采", "/党支部建设"};
     public static String imageDir = "/images";
+    public static String[] memberFiles={"/党员活动","/支部信息"};
+    public static String[] CujinFiles={"/简介","/组织机构","/协会动态"};
     private LinearLayout ll_bg;
     private JzvdStd videoView;
     private RecyclerView mRecyclerView;
 
     @BindViews({R.id.img_one, R.id.img_two, R.id.img_three
             , R.id.img_fore, R.id.img_five, R.id.img_six})
-    List<ImageView> mImageviews;
+    List<NiceImageView> mImageviews;
     private List<File> mImages;
     private HomeModel homeModel;
     LoadingDialog loadingDialog;
@@ -109,6 +105,19 @@ public class MainActivity extends BaseActivity {
         File file_child = new File(FileUtils.getSDPath() + fileDirs[0] + imageDir);
         if (!file_child.exists()) {
             file_child.mkdir();
+        }
+        //创建党支部下党员活动、支部信息
+        for (int i = 0; i <memberFiles.length ; i++) {
+            File file_member = new File(FileUtils.getSDPath() + fileDirs[3] + memberFiles[i]);
+            if (!file_member.exists()) {
+                file_member.mkdir();
+            }
+        }
+        for (int i = 0; i <CujinFiles.length ; i++) {
+            File file_cujin = new File(FileUtils.getSDPath() + fileDirs[1] + CujinFiles[i]);
+            if (!file_cujin.exists()) {
+                file_cujin.mkdir();
+            }
         }
         gotoFile();
     }
@@ -171,7 +180,9 @@ public class MainActivity extends BaseActivity {
                 return;
             }
             //mImageviews.get(i).setImageBitmap(FileUtils.getLoacalBitmap(mImages.get(i).getPath()));
-            Glide.with(this).load(mImages.get(i)).into( mImageviews.get(i));
+            Glide.with(this)
+                    .load(mImages.get(i))
+                    .into( mImageviews.get(i));
         }
     }
 
@@ -182,16 +193,19 @@ public class MainActivity extends BaseActivity {
         return media.getFrameAtTime();
     }
 
-    @OnClick({R.id.btn_one, R.id.btn_two})
+    @OnClick({R.id.btn_one, R.id.btn_two,R.id.btn_three})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_one:
-                //首页
-                startActivity(new Intent(this, AdvancementActivity.class));
+                //简介
+                startActivity(new Intent(this, CujinActivity.class));
                 break;
             case R.id.btn_two:
-                //首页
+                //会员
                 startActivity(new Intent(this, VipActivity.class));
+                break;
+            case R.id.btn_three:
+                startActivity(new Intent(this, MemberActivity.class));
                 break;
         }
     }

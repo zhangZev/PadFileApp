@@ -11,7 +11,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,16 +34,16 @@ android {
 }
 
 dependencies {
-
+    implementation 'com.android.support:multidex:2.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation files('libs\\words.jar')
+    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //implementation files('libs\\words.jar')
 
 
     implementation 'com.github.githubZYQ:easypermission:v1.0.0'
     implementation 'com.jakewharton:butterknife:10.2.3'
-    implementation files('libs\\words.jar')
+    //implementation files('libs\\words.jar')
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
     implementation 'fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.xhtml:1.0.6'
@@ -55,4 +55,8 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    implementation 'com.github.SheHuan:NiceImageView:1.0.5'
+    //implementation 'com.aspose:aspose-words:20.6'
+    //implementation 'com.github.RDSunhy:android-word2html:1.2.0'
 }
